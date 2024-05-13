@@ -1,0 +1,31 @@
+/* src/components/JobList.css */
+
+.job-list-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .company-logo-container {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  
+  .company-logo {
+    width: 100%;
+    height: auto;
+  }
+  
+  .job-card {
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .job-card:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  }
+  
