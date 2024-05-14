@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Job } from "../Redux/interface";
 import { applyingJob } from "../Redux/features/GlobalSlice";
 import { usePDF } from "react-to-pdf";
+import { Link } from "react-router-dom";
 
 const JobList = () => {
   const [selectedJob, setSelectedJob] = useState(null);
@@ -32,13 +33,16 @@ const JobList = () => {
     console.log("Form submitted with data:", formData, selectedJob);
     // dispatch(applyingJob(selectedJob));
     // For now, just close the modal
-    setShowModal(false);
+    handleCloseModal();
   };
 
   return (
     <div className="job-list-container">
       <Container>
         <h1 className="mb-4">Job List</h1>
+        <Link to="/applied-job">
+          <h1>Applied Jobs</h1>
+        </Link>
         <Row xs={1} md={2} lg={3} className="g-4">
           {jobs.map((job: any) => (
             <Col key={job.id} id={job.id}>
@@ -89,45 +93,6 @@ const JobList = () => {
               </Card>
             </Col>
           ))}
-        </Row>
-        <h1>Applied Job</h1>
-        <Row xs={1} md={2} lg={3} className="g-4">
-          {jobs
-            .filter((job) => job.status)
-            .map((job) => (
-              <Col key={job.id}>
-                <Card className="h-100 job-card">
-                  <Card.Body>
-                    <div className="d-flex align-items-center justify-content-between mb-3">
-                      <div className="company-logo-container">
-                        <img
-                          src={job.logo}
-                          alt={job.company}
-                          className="company-logo"
-                        />
-                      </div>
-                      <div>
-                        <Card.Title className="mb-1">{job.title}</Card.Title>
-                        <Card.Subtitle className="text-muted mb-2">
-                          {job.company}
-                        </Card.Subtitle>
-                      </div>
-                    </div>
-                    <Card.Text className="mb-3">{job.description}</Card.Text>
-                    {job.status ? (
-                      <Button variant="secondary">Applied</Button>
-                    ) : (
-                      <Button
-                        variant="primary"
-                        onClick={() => handleApplyClick(job)}
-                      >
-                        Apply for Job
-                      </Button>
-                    )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
         </Row>
       </Container>
       {showModal && (

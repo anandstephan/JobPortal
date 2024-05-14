@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { applyingJob } from "../Redux/features/GlobalSlice";
 
-const ApplyJobForm = ({ job }) => {
+const ApplyJobForm = ({ job, onSubmit }) => {
   const dispatch = useDispatch();
   const newStateValue = useSelector((s) => s.global);
 
@@ -51,6 +51,7 @@ const ApplyJobForm = ({ job }) => {
     // setFieldValue("aboutMe", "");
     // setSubmitting(false);
     console.log("some Value", newStateValue);
+    onSubmit();
   };
 
   return (

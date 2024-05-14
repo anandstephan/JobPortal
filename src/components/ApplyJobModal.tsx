@@ -11,7 +11,7 @@ const ApplyJobModal = ({ job, showModal, onClose, onSubmit }) => {
   };
 
   const handleSubmit = (formData) => {
-    onSubmit(formData);
+    // onSubmit(formData);
     handleClose();
   };
 
