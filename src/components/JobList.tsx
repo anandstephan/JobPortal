@@ -6,12 +6,15 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Job } from "../Redux/interface";
 import { applyingJob } from "../Redux/features/GlobalSlice";
+import { usePDF } from "react-to-pdf";
 
 const JobList = () => {
   const [selectedJob, setSelectedJob] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const jobs = useSelector((s) => s.global.jobList);
   const dispatch = useDispatch();
+
+  const { toPDF, targetRef } = usePDF({ filename: "page.pdf" });
 
   const handleApplyClick = (job: Job) => {
     console.log("hi", job.id);
@@ -37,9 +40,9 @@ const JobList = () => {
       <Container>
         <h1 className="mb-4">Job List</h1>
         <Row xs={1} md={2} lg={3} className="g-4">
-          {jobs.map((job) => (
-            <Col key={job.id}>
-              <Card className="h-100 job-card">
+          {jobs.map((job: any) => (
+            <Col key={job.id} id={job.id}>
+              <Card className="h-100 job-card" ref={targetRef}>
                 <Card.Body>
                   <div className="d-flex align-items-center justify-content-between mb-3">
                     <div className="company-logo-container">
@@ -57,16 +60,31 @@ const JobList = () => {
                     </div>
                   </div>
                   <Card.Text className="mb-3">{job.description}</Card.Text>
-                  {job.status ? (
-                    <Button variant="secondary">Applied</Button>
-                  ) : (
-                    <Button
-                      variant="primary"
-                      onClick={() => handleApplyClick(job)}
-                    >
-                      Apply for Job
-                    </Button>
-                  )}
+                  <Row>
+                    <Col sm={7}>
+                      {job.status ? (
+                        <Button variant="secondary">Applied</Button>
+                      ) : (
+                        <Button
+                          variant="primary"
+                          onClick={() => handleApplyClick(job)}
+                        >
+                          Apply for Job
+                        </Button>
+                      )}
+                    </Col>
+                    <Col sm={5}>
+                      <Button
+                        variant="primary ml-3"
+                        onClick={() => {
+                          console.log("---", document.getElementById(job.id));
+                          toPDF();
+                        }}
+                      >
+                        Download
+                      </Button>
+                    </Col>
+                  </Row>
                 </Card.Body>
               </Card>
             </Col>
